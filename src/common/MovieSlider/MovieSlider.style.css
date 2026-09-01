@@ -1,0 +1,90 @@
+/* ===========================================================
+   영화 슬라이드
+   =========================================================== */
+
+.slider { margin-bottom: clamp(30px, 5vw, 52px); }
+
+/* ── 제목 ─────────────────────────────────────── */
+.slider__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 clamp(16px, 4vw, 44px);
+  margin-bottom: 14px;
+}
+
+.slider__title {
+  margin: 0;
+  font-family: "Archivo", sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.05rem, 3vw, 1.4rem);
+  letter-spacing: -0.018em;
+}
+
+.slider__desc { margin: 4px 0 0; font-size: 0.78rem; color: var(--fg-3); }
+
+/* ── 로딩 · 에러 자리 ─────────────────────────── */
+.slider__state {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  padding: 0 clamp(16px, 4vw, 44px);
+}
+
+.slider__alert {
+  width: 100%;
+  max-width: 420px;
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--fg);
+  background: rgba(225, 29, 46, 0.1);
+  border: 1px solid rgba(225, 29, 46, 0.4);
+  border-radius: 10px;
+}
+
+/* ===========================================================
+   캐러셀 — 라이브러리 기본 스타일 덮어쓰기
+   =========================================================== */
+
+/* 좌우 여백을 화면 여백과 맞춥니다 */
+.slider__track { padding: 0 clamp(11px, 3.4vw, 39px); }
+
+/* ⚠️ 카드가 확대될 때 잘리는 문제
+      라이브러리의 .react-multi-carousel-list 는 overflow: hidden 입니다.
+      카드가 위로 떠오르면 윗부분이 잘려 보입니다.
+      overflow를 visible로 바꾸면 옆 카드가 화면 밖으로 삐져나옵니다.
+      → 위아래 여백을 넉넉히 줘서 잘림 없이 확대되게 합니다. */
+.react-multi-carousel-list { padding: 22px 0 30px; }
+
+/* 카드가 서로 겹칠 때 확대된 쪽이 위로 오게 합니다 */
+.react-multi-carousel-item { overflow: visible; }
+
+/* ── 화살표 ───────────────────────────────────── */
+.react-multi-carousel-list .react-multiple-carousel__arrow {
+  z-index: 6;
+  min-width: 38px;
+  min-height: 38px;
+  background: rgba(9, 9, 11, 0.72);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.react-multi-carousel-list .react-multiple-carousel__arrow:hover {
+  background: var(--accent);
+  transform: scale(1.08);
+}
+
+.react-multi-carousel-list .react-multiple-carousel__arrow::before { font-size: 16px; }
+
+.react-multi-carousel-list .react-multiple-carousel__arrow--left { left: 6px; }
+.react-multi-carousel-list .react-multiple-carousel__arrow--right { right: 6px; }
+
+/* ── 모바일 ───────────────────────────────────── */
+@media (max-width: 600px) {
+  .react-multi-carousel-list { padding: 12px 0 18px; }
+  .slider__track { padding: 0 12px; }
+  .slider { margin-bottom: 26px; }
+}
