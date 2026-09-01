@@ -1,0 +1,154 @@
+/* ===========================================================
+   영화 목록 페이지
+   =========================================================== */
+
+.movies {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: clamp(96px, 14vh, 140px) clamp(16px, 4vw, 44px) 0;
+}
+
+/* ── 머리말 ───────────────────────────────────── */
+.movies__head { margin-bottom: clamp(22px, 4vw, 34px); }
+
+.movies__eyebrow {
+  margin: 0 0 11px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.movies__title {
+  margin: 0;
+  font-family: "Archivo", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  letter-spacing: -0.028em;
+  line-height: 1.18;
+
+  /* 긴 검색어가 화면을 밀어내지 않게 */
+  overflow-wrap: break-word;
+  word-break: keep-all;
+}
+
+.movies__sub {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--fg-2);
+}
+
+.movies__sub strong { color: var(--fg); font-weight: 700; }
+
+/* 항목 사이 가운뎃점 */
+.movies__dot::before { content: "·"; margin-right: 10px; color: var(--fg-3); }
+
+.movies__clear {
+  margin-top: 14px;
+  padding: 8px 16px;
+  font-family: inherit;
+  font-size: 0.78rem;
+  color: var(--fg-2);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.22s var(--ease), border-color 0.22s var(--ease);
+}
+
+.movies__clear:hover { color: var(--fg); border-color: var(--accent); }
+
+/* ── 본문 배치 ────────────────────────────────── */
+.movies__body {
+  display: grid;
+  grid-template-columns: 260px 1fr;   /* 왼쪽 필터, 오른쪽 목록 */
+  gap: clamp(18px, 3vw, 32px);
+  align-items: start;
+}
+
+.movies__main { min-width: 0; }       /* 격자가 넘치지 않게 */
+
+/* ── 격자 ─────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: clamp(12px, 1.6vw, 20px);
+  transition: opacity 0.25s var(--ease);
+}
+
+/* 다음 페이지를 받는 동안 살짝 흐리게 — "바뀌는 중"임을 알립니다 */
+.grid.is-fetching { opacity: 0.5; pointer-events: none; }
+
+.grid .card { padding: 0; }           /* 슬라이드용 좌우 여백 제거 */
+
+/* ── 로딩 뼈대 ────────────────────────────────── */
+.skeleton {
+  aspect-ratio: 2 / 3;
+  border-radius: 8px;
+  background: linear-gradient(
+    100deg,
+    var(--surface) 30%,
+    var(--surface-2) 50%,
+    var(--surface) 70%
+  );
+  background-size: 300% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  from { background-position: 150% 0; }
+  to { background-position: -50% 0; }
+}
+
+/* ── 결과 없음 ────────────────────────────────── */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 320px;
+  padding: 40px 20px;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.empty__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  overflow-wrap: break-word;
+  word-break: keep-all;
+}
+
+.empty__desc {
+  margin: 4px 0 20px;
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--fg-2);
+}
+
+/* ===========================================================
+   반응형
+   =========================================================== */
+
+/* 태블릿 이하 — 필터를 위로 올립니다 */
+@media (max-width: 991px) {
+  .movies__body { grid-template-columns: 1fr; }
+  .movies__side { order: -1; }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+}
+
+/* 모바일 — 카드 2열 */
+@media (max-width: 600px) {
+  .movies { padding-top: 92px; }
+  .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .empty { min-height: 240px; padding: 30px 16px; }
+}
