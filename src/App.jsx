@@ -1,15 +1,15 @@
 import { Routes, Route } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css"; // ⚠️ 이 줄이 없으면 부트스트랩 스타일이 하나도 안 먹습니다
 import "./App.css";
-import AppLayout from "./layout/AppLayout";
+import AppLayout from "./Layout/AppLayout";
 import Homepage from "./pages/Homepage/Homepage";
 import MoviePage from "./pages/Movies/MoviePage";
 import MovieDetailPage from "./pages/MovieDetail/MovieDetailPage";
 import NotFoundPage from "./pages/NotFound/NotFoundPage";
 
-// ═══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 // 라우터 구성 — Nested Route(중첩 라우트)
-// ═══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 //
 // ▸ 부모 Route의 element에 AppLayout을 두고, 그 안에 자식 Route를 넣습니다.
 // ▸ AppLayout의 <Outlet /> 자리에 자식 페이지가 그려집니다.
