@@ -1,0 +1,91 @@
+/* ===========================================================
+   페이지네이션
+   ▸ 손가락으로 누를 수 있는 크기(최소 40px)를 지킵니다.
+   =========================================================== */
+
+.pager {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: clamp(28px, 5vw, 44px);
+  padding-top: clamp(20px, 4vw, 30px);
+  border-top: 1px solid var(--line);
+}
+
+.pager__list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pager__item { display: block; }
+
+.pager__link {
+  display: grid;
+  place-items: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 10px;
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--fg-2);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.22s var(--ease), background 0.22s var(--ease),
+    border-color 0.22s var(--ease);
+}
+
+.pager__link:hover {
+  color: var(--fg);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* 현재 페이지 */
+.is-active .pager__link {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+  font-weight: 700;
+}
+
+/* ← → 화살표 */
+.pager__link--arrow {
+  font-size: 1.3rem;
+  line-height: 1;
+  border-color: var(--line);
+}
+
+/* 첫 페이지에서 ‹ , 마지막에서 › 는 눌리지 않습니다 */
+.is-disabled .pager__link {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* 생략 부호 … */
+.pager__link--break { cursor: default; color: var(--fg-3); }
+.pager__link--break:hover { background: transparent; }
+
+.pager__link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.pager__info {
+  margin: 0;
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  color: var(--fg-3);
+}
+
+/* ── 모바일 ───────────────────────────────────── */
+@media (max-width: 520px) {
+  .pager__link { min-width: 36px; height: 36px; padding: 0 7px; font-size: 0.8rem; }
+  .pager__list { gap: 3px; }
+}

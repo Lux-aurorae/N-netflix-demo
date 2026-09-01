@@ -1,0 +1,21 @@
+/* Vite 기본 index.css 내용을 전부 지우고 이걸로 교체하세요.
+   기본 파일의 라이트 테마 · 가운데정렬이 이 디자인과 충돌합니다. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button, input { font: inherit; }
+
+img { display: block; max-width: 100%; }
