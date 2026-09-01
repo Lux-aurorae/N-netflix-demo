@@ -1,0 +1,73 @@
+/* ===========================================================
+   영화 상세 페이지
+   =========================================================== */
+
+.detail {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: clamp(96px, 14vh, 140px) clamp(16px, 4vw, 44px) 0;
+}
+
+.detail__back {
+  display: inline-block;
+  margin-bottom: 26px;
+  font-size: 0.82rem;
+  color: var(--fg-2);
+  text-decoration: none;
+  transition: color 0.25s var(--ease);
+}
+
+.detail__back:hover { color: var(--accent); }
+
+.detail__grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: clamp(20px, 4vw, 44px);
+  align-items: start;
+}
+
+.detail__poster { width: 100%; }
+
+.detail__eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.detail__title {
+  margin: 0;
+  font-family: "Archivo", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.6rem, 5vw, 2.3rem);
+  letter-spacing: -0.028em;
+}
+
+.detail__desc {
+  margin: 14px 0 26px;
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--fg-2);
+}
+
+.detail__desc strong { color: var(--fg); }
+
+.specs { margin: 0; }
+
+.specs__row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  font-size: 0.85rem;
+  border-top: 1px solid var(--line);
+}
+
+.specs__row dt { color: var(--fg-3); }
+.specs__row dd { margin: 0; color: var(--fg-2); }
+
+@media (max-width: 720px) {
+  .detail__grid { grid-template-columns: 1fr; }
+  .detail__poster { max-width: 220px; }
+}
