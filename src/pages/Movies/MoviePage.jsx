@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router";
 import { useSearchMovieQuery } from "../../hooks/useSearchMovie";
 import MovieCard from "../../common/MovieCard/MovieCard";
 import Spinner from "../../common/Spinner/Spinner";
-import { Notice } from "../../common/Notice/Notice";
+import Notice from "../../common/Notice/Notice";
 import MovieFilter from "./components/MovieFilter/MovieFilter";
 import Pager from "./components/Pager/Pager";
 import "./MoviePage.style.css";

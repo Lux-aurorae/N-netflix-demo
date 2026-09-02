@@ -1,13 +1,34 @@
 import PaginateModule from "react-paginate";
+import { resolveDefault } from "../../../../utils/interop";
 import "./Pager.style.css";
 
-// 기존 resolveDefault 함수가 환경에 따라 실패하여 Error #130을 유발하고 있습니다.
-// interop.js 의존성을 제거하고 직접 안전하게 default 컴포넌트를 추출합니다.
-const ReactPaginate = PaginateModule.default || PaginateModule;
+// ⚠️ react-paginate 는 UMD(CommonJS 겸용) 방식으로 만들어진 라이브러리입니다.
+//    Vite가 브라우저용으로 바꿀 때 환경에 따라
+//    ① 함수 그대로 들어오거나  ② { default: 함수 } 로 한 겹 감싸져 들어옵니다.
+//
+//    ②인데 그냥 쓰면 이런 오류가 나고 화면이 통째로 비어 버립니다.
+//      "Element type is invalid: ... but got: object"
+//
+//    아래 한 줄로 양쪽 경우를 모두 처리합니다.
+//    (?? 는 앞이 없을 때만 뒤를 쓰는 연산자입니다)
+//    react-multi-carousel 도 같은 이유로 같은 처리를 해 두었습니다.
+const ReactPaginate = resolveDefault(PaginateModule);
 
 // ═══════════════════════════════════════════════════════════
 // 페이지네이션
 // ═══════════════════════════════════════════════════════════
+//
+// ▸ react-paginate 는 0부터 세고, 우리는 1부터 셉니다.
+//   그래서 넘겨줄 때 -1, 받을 때 +1 을 합니다.
+//   · forcePage={page - 1}
+//   · onPageChange 의 selected + 1
+//   이 보정을 빠뜨리면 한 페이지씩 어긋납니다.
+//
+// ▸ props
+//   · page       … 현재 페이지 (1부터)
+//   · totalPages … 전체 페이지 수
+//   · onChange   … 페이지가 바뀌었을 때 부를 함수
+// ─────────────────────────────────────────────────────────
 function Pager({ page, totalPages, onChange }) {
   // 페이지가 하나뿐이면 굳이 보여줄 필요가 없습니다.
   if (!totalPages || totalPages <= 1) return null;
@@ -29,6 +50,7 @@ function Pager({ page, totalPages, onChange }) {
         disableInitialCallback                  /* 처음 렌더될 때 콜백 안 부름 */
 
         // ── 스타일용 클래스 ──
+        // 라이브러리가 만드는 태그에 클래스를 붙여 CSS로 꾸밉니다.
         containerClassName="pager__list"
         pageClassName="pager__item"
         pageLinkClassName="pager__link"
