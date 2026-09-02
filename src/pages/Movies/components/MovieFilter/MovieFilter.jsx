@@ -22,6 +22,7 @@ import "./MovieFilter.style.css";
 
 export const SORT_OPTIONS = [
   { key: "default", label: "기본순" },
+  { key: "popularity", label: "인기순" },
   { key: "rating", label: "평점 높은순" },
   { key: "newest", label: "최신순" },
   { key: "title", label: "가나다순" },
