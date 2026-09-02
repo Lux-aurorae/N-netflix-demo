@@ -20,20 +20,25 @@
 //     import Mod from "react-paginate";
 //     const ReactPaginate = resolveDefault(Mod);
 // ─────────────────────────────────────────────────────────
-export function resolveDefault(mod) {
-  let c = mod;
+export function resolveDefault(mod, exportNames = []) {
+  const queue = [mod];
+  const seen = new Set();
 
-  // 함수가 나올 때까지 default 를 따라 들어갑니다. (최대 3번)
-  for (let i = 0; i < 3; i++) {
-    if (typeof c === "function") return c;
-    if (c && typeof c === "object" && "default" in c) {
-      c = c.default;
-      continue;
+  while (queue.length > 0) {
+    const candidate = queue.shift();
+
+    if (typeof candidate === "function") return candidate;
+    if (!candidate || typeof candidate !== "object" || seen.has(candidate)) continue;
+
+    seen.add(candidate);
+
+    // Vite/Rollup/Node가 CommonJS 모듈을 감싸는 형태를 모두 처리합니다.
+    for (const key of [...exportNames, "default", "module.exports"]) {
+      if (key in candidate) queue.push(candidate[key]);
     }
-    break;
   }
 
-  return c;
+  return null;
 }
 
 export default resolveDefault;

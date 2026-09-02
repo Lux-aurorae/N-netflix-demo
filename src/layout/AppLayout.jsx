@@ -24,6 +24,12 @@ function AppLayout() {
   // 새로고침해도 검색어가 유지됩니다.
   const [keyword, setKeyword] = useState(searchParams.get("query") ?? "");
 
+  // 뒤로가기, Movies 메뉴, "검색어 지우기"로 주소가 바뀔 때
+  // 검색창도 현재 주소와 같은 값으로 맞춥니다.
+  useEffect(() => {
+    setKeyword(searchParams.get("query") ?? "");
+  }, [searchParams]);
+
   // 스크롤을 내리면 내비게이션 바에 배경을 깝니다.
   // 맨 위에서는 투명해 배너가 시원하게 보이고,
   // 내려가면 글자가 콘텐츠와 겹쳐 안 읽히는 것을 막습니다.

@@ -2,7 +2,6 @@ import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "react-router";
 import { useSearchMovieQuery } from "../../hooks/useSearchMovie";
 import MovieCard from "../../common/MovieCard/MovieCard";
-import Spinner from "../../common/Spinner/Spinner";
 import Notice from "../../common/Notice/Notice";
 import MovieFilter from "./components/MovieFilter/MovieFilter";
 import Pager from "./components/Pager/Pager";
@@ -28,8 +27,9 @@ import "./MoviePage.style.css";
 function MoviePage() {
   const [query, setQuery] = useSearchParams();
 
-  const keyword = query.get("query") ?? "";
-  const page = Number(query.get("page")) || 1;
+  const keyword = (query.get("query") ?? "").trim();
+  const requestedPage = Number(query.get("page"));
+  const page = Number.isInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1;
 
   // 장르·정렬은 주소에 넣지 않았습니다.
   // 화면에서만 잠깐 쓰는 값이라 링크로 공유할 필요가 적기 때문입니다.
@@ -38,8 +38,18 @@ function MoviePage() {
 
   const { data, isLoading, isError, error, isFetching, status } = useSearchMovieQuery(keyword, page);
 
-  const movies = data?.results ?? [];
+  const movies = useMemo(() => data?.results ?? [], [data?.results]);
   const totalPages = data?.totalPages ?? 0;
+
+  // 주소를 직접 수정해 마지막 페이지보다 큰 값으로 들어온 경우 보정합니다.
+  useEffect(() => {
+    if (!isLoading && !isError && totalPages > 0 && page > totalPages) {
+      const params = {};
+      if (keyword) params.query = keyword;
+      if (totalPages > 1) params.page = String(totalPages);
+      setQuery(params, { replace: true });
+    }
+  }, [isLoading, isError, keyword, page, setQuery, totalPages]);
 
   // 검색어가 바뀌면 필터를 초기화합니다.
   // 이전 검색의 장르가 남아 있으면 결과가 0건으로 보여 혼란스럽습니다.

@@ -1,4 +1,4 @@
-import PaginateModule from "react-paginate";
+import * as PaginateModule from "react-paginate";
 import { resolveDefault } from "../../../../utils/interop";
 import "./Pager.style.css";
 
@@ -12,7 +12,7 @@ import "./Pager.style.css";
 //    아래 한 줄로 양쪽 경우를 모두 처리합니다.
 //    (?? 는 앞이 없을 때만 뒤를 쓰는 연산자입니다)
 //    react-multi-carousel 도 같은 이유로 같은 처리를 해 두었습니다.
-const ReactPaginate = resolveDefault(PaginateModule);
+const ReactPaginate = resolveDefault(PaginateModule, ["ReactPaginate"]);
 
 // ═══════════════════════════════════════════════════════════
 // 페이지네이션
@@ -33,12 +33,20 @@ function Pager({ page, totalPages, onChange }) {
   // 페이지가 하나뿐이면 굳이 보여줄 필요가 없습니다.
   if (!totalPages || totalPages <= 1) return null;
 
+  // 잘못된 라이브러리 import가 다시 생겨도 React #130의 검은 화면 대신
+  // 개발자가 원인을 바로 알 수 있는 오류를 남깁니다.
+  if (!ReactPaginate) {
+    throw new Error("react-paginate 컴포넌트를 불러오지 못했습니다.");
+  }
+
   return (
     <nav className="pager" aria-label="페이지 이동">
       <ReactPaginate
         // ── 화면에 보이는 글자 ──
         previousLabel="‹"
         nextLabel="›"
+        previousAriaLabel="이전 페이지"
+        nextAriaLabel="다음 페이지"
         breakLabel="…"
 
         // ── 동작 ──
