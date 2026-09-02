@@ -1,4 +1,4 @@
-import CarouselModule from "react-multi-carousel";
+import * as CarouselModule from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css"; // 라이브러리 기본 스타일 (필수)
 import MovieCard from "../MovieCard/MovieCard";
 import Spinner from "../Spinner/Spinner";
