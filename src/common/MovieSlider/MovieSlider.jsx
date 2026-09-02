@@ -3,6 +3,7 @@ import "react-multi-carousel/lib/styles.css"; // 라이브러리 기본 스타�
 import MovieCard from "../MovieCard/MovieCard";
 import Spinner from "../Spinner/Spinner";
 import Notice from "../Notice/Notice";
+import { resolveDefault } from "../../utils/interop";
 import "./MovieSlider.style.css";
 
 // ⚠️ react-multi-carousel 은 CommonJS 방식으로 만들어진 라이브러리입니다.
@@ -10,11 +11,11 @@ import "./MovieSlider.style.css";
 //    ① 함수 그대로 들어오거나  ② { default: 함수 } 로 한 겹 감싸져 들어옵니다.
 //    ②인데 그냥 쓰면 "Element type is invalid ... but got: object" 오류가 납니다.
 //    아래 한 줄로 양쪽을 모두 처리합니다.
-const Carousel = CarouselModule?.default ?? CarouselModule;
+const Carousel = resolveDefault(CarouselModule);
 
-// ══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 // 영화 슬라이더 — 공통 컴포넌트
-// ══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 //
 // ▸ 왜 common 폴더에 있나
 //   · 홈 화면의 세 섹션이 모두 이 하나를 씁니다.

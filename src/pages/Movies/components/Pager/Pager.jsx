@@ -1,5 +1,18 @@
-import ReactPaginate from "react-paginate";
+import PaginateModule from "react-paginate";
+import { resolveDefault } from "../../../../utils/interop";
 import "./Pager.style.css";
+
+// ⚠️ react-paginate 는 UMD(CommonJS 겸용) 방식으로 만들어진 라이브러리입니다.
+//    Vite가 브라우저용으로 바꿀 때 환경에 따라
+//    ① 함수 그대로 들어오거나  ② { default: 함수 } 로 한 겹 감싸져 들어옵니다.
+//
+//    ②인데 그냥 쓰면 이런 오류가 나고 화면이 통째로 비어 버립니다.
+//      "Element type is invalid: ... but got: object"
+//
+//    아래 한 줄로 양쪽 경우를 모두 처리합니다.
+//    (?? 는 앞이 없을 때만 뒤를 쓰는 연산자입니다)
+//    react-multi-carousel 도 같은 이유로 같은 처리를 해 두었습니다.
+const ReactPaginate = resolveDefault(PaginateModule);
 
 // ═══════════════════════════════════════════════════════════
 // 페이지네이션
