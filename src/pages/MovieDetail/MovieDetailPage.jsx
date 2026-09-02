@@ -141,4 +141,4 @@ function MovieDetailPage() {
   );
 }
 
-export default MovieDetailPage;
+export default MovieDetailPage
