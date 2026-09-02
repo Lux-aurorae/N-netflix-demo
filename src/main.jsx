@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./index.css";
 import App from "./App.jsx";
+import ErrorBoundary from "./common/ErrorBoundary/ErrorBoundary.jsx";
 
 // ═══════════════════════════════════════════════════════════
 // 앱 시작점 — 감싸는 순서가 중요합니다
@@ -30,11 +31,15 @@ const queryClient = new QueryClient({
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <App />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </BrowserRouter>
+    {/* ErrorBoundary로 감싸면 화면이 죽는 대신 오류 내용이 표시됩니다.
+        "검은 화면"만 보고 원인을 추측하지 않아도 됩니다. */}
+    <ErrorBoundary>
+      <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <App />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   </StrictMode>
 );
